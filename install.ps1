@@ -105,7 +105,8 @@ function Install-ElevatedApplicant {
     }
 
     try {
-        Invoke-WebRequest -Uri $asset.browser_download_url -Headers $downloadHeaders -OutFile $DownloadPath -ErrorAction Stop
+        # Use the API URL (not browser_download_url) — the API URL works with token auth for private repos
+        Invoke-WebRequest -Uri $asset.url -Headers $downloadHeaders -OutFile $DownloadPath -ErrorAction Stop
     } catch {
         Write-Host "ERROR: Download failed." -ForegroundColor Red
         $statusCode = if ($_.Exception.Response) { $_.Exception.Response.StatusCode.value__ } else { "unknown" }

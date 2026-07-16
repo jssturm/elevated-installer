@@ -52,8 +52,18 @@ RELEASE_JSON=$(curl -sf -H "Authorization: token $TOKEN" "$RELEASE_API") || {
   exit 1
 }
 
-# Find the Linux asset (elevated-applicant-linux.tar.gz)
-ASSET_URL=$(echo "$RELEASE_JSON" | grep -o '"browser_download_url": *"[^"]*linux[^"]*"' | head -1 | cut -d'"' -f4)
+# Find the Linux asset (.tar.gz) — prefer linux named, fall back to any .tar.gz
+ASSET_URL=$(echo "$RELEASE_JSON" | grep -o '"url": *"[^"]*"' | head -1 | cut -d'"' -f4)
+# Actually, we need to parse properly. Let's use a simpler approach:
+# Get the asset API URL for a .tar.gz file
+ASSET_URL=$(echo "$RELEASE_JSON" | python3 -c "
+import json, sys
+data = json.load(sys.stdin)
+for a in data.get('assets', []):
+    if '.tar.gz' in a.get('name', ''):
+        print(a['url'])
+        break
+" 2>/dev/null)
 
 if [ -z "$ASSET_URL" ]; then
   echo -e "${RED}Error: No Linux release asset found.${NC}"
