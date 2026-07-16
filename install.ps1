@@ -32,14 +32,11 @@ if (-not $Token) {
     Write-Host "  Create a token at: https://github.com/settings/tokens"
     Write-Host "  (needs repo scope — or just 'read:packages' for releases)"
     Write-Host ""
-    $Token = Read-Host -Prompt "  GitHub personal access token" -AsSecureString
+    $Token = Read-Host -Prompt "  GitHub personal access token"
     if (-not $Token) {
         Write-Host "Error: GitHub token is required." -ForegroundColor Red
         exit 1
     }
-    # Convert secure string to plain text
-    $BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($Token)
-    $Token = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR)
 }
 
 if (-not $Token) {
