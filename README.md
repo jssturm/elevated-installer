@@ -18,8 +18,9 @@ bash install.sh
 ### Windows (PowerShell)
 
 ```powershell
-Invoke-WebRequest -Uri https://raw.githubusercontent.com/jssturm/elevated-installer/main/install.ps1 -OutFile install.ps1
-.\install.ps1
+$s = Join-Path $env:TEMP install.ps1
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/jssturm/elevated-installer/main/install.ps1 -OutFile $s
+& $s
 ```
 
 The installer will prompt you for a **GitHub personal access token** — this is required to download the app from its private repository.
