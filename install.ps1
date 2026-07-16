@@ -185,3 +185,5 @@ Write-Host "    1. cd $InstallDir" -ForegroundColor Cyan
 Write-Host "    2. Add your CV as cv.md" -ForegroundColor Cyan
 Write-Host "    3. Open in an AI CLI: claude (or opencode, codex, gemini)" -ForegroundColor Cyan
 Write-Host ""
+Write-Host "Press Enter to close this window..." -ForegroundColor Gray
+Read-Host
