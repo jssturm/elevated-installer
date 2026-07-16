@@ -161,13 +161,20 @@ function Install-ElevatedApplicant {
     Pop-Location
 
     # ── Playwright ─────────────────────────────────────────────────────
-    Write-Host "  Setting up Playwright browser..." -ForegroundColor Cyan
+    Write-Host "  Setting up Playwright browser (this may take a minute)..." -ForegroundColor Cyan
     Push-Location $InstallDir
+    $playwrightOk = $false
     try {
-        npx playwright install chromium 2>&1 | Out-Null
-        Write-Host "  OK   Playwright Chromium installed" -ForegroundColor Green
+        npx playwright install chromium
+        if ($LASTEXITCODE -eq 0) { $playwrightOk = $true }
     } catch {
-        Write-Host "  NOTE: Run 'npx playwright install chromium' manually if PDF generation is needed" -ForegroundColor Yellow
+        Write-Host "  Playwright install error: $_" -ForegroundColor Yellow
+    }
+    if ($playwrightOk) {
+        Write-Host "  OK   Playwright Chromium installed" -ForegroundColor Green
+    } else {
+        Write-Host "  NOTE: Playwright install had issues. Run manually if you need PDFs:" -ForegroundColor Yellow
+        Write-Host "        cd $InstallDir; npx playwright install chromium" -ForegroundColor Yellow
     }
     Pop-Location
 

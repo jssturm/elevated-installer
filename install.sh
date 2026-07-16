@@ -102,8 +102,13 @@ echo -e "${CYAN}→${NC} Installing dependencies..."
 cd "$INSTALL_DIR"
 npm install --silent 2>/dev/null || echo -e "  (warnings during install are normal)"
 
-echo -e "${CYAN}→${NC} Setting up Playwright browser..."
-npx playwright install chromium 2>/dev/null || echo -e "  (run 'npx playwright install chromium' manually if needed)"
+echo -e "${CYAN}→${NC} Setting up Playwright browser (this may take a minute)..."
+if npx playwright install chromium; then
+  echo -e "  ${GREEN}✓${NC} Playwright Chromium installed"
+else
+  echo -e "  ${YELLOW}⚠${NC} Playwright install had issues. Run manually if you need PDFs:"
+  echo -e "      cd $INSTALL_DIR && npx playwright install chromium"
+fi
 
 # ── Done ───────────────────────────────────────────────────────────────
 echo ""
