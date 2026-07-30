@@ -44,15 +44,16 @@ The installer will prompt you for a **GitHub personal access token** — this is
 |-------------|---------|
 | **Node.js 20+** | [Download from nodejs.org](https://nodejs.org) |
 | **GitHub token** | Classic token with `repo` scope |
-| **Disk space** | ~500 MB (includes Playwright Chromium) |
+| **Disk space** | ~1–2 GB (includes the built web dashboard and Playwright Chromium) |
 | **AI CLI (optional)** | Claude Code, OpenCode, Codex, Gemini, Qwen, or Grok Build — for AI-powered evaluation |
 
 ---
 
 ## What Gets Installed
 
-- The Elevated Applicant application files
+- The Elevated Applicant application files (CLI + web app)
 - All npm dependencies
+- The full web dashboard, built locally for production
 - Playwright Chromium browser (for PDF generation)
 - Initial configuration templates (`profile.yml`, `portals.yml`)
 
@@ -65,17 +66,17 @@ Everything lives in `~/Elevated-Applicant`. No files are placed anywhere else on
 ```bash
 cd ~/Elevated-Applicant
 
-# Open in your AI coding assistant
+# Start the web dashboard — the default experience
+elevated-applicant serve --open   # opens http://127.0.0.1:3000
+
+# Optional: open in your AI coding assistant for a conversational workflow
 claude        # Claude Code
 opencode      # OpenCode
 codex         # Codex CLI
 gemini        # Gemini CLI
-
-# Or start the web dashboard
-elevated-applicant serve --open
 ```
 
-The AI assistant will walk you through CV upload, profile configuration, target roles, and job discovery — all conversationally. No manual YAML editing required.
+The dashboard walks you through CV upload, profile configuration, target roles, and job discovery. Prefer the terminal? An AI coding CLI gives you the same setup conversationally — no manual YAML editing required either way.
 
 ---
 
